@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EC996EBA2AD839AB002353AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EB92AD839AB002353AE /* main.swift */; };
+		EC996EC12AD84ED5002353AE /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC02AD84ED5002353AE /* Auth.swift */; };
+		EC996EC32AD85000002353AE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC22AD85000002353AE /* Keychain.swift */; };
+		EC996EC62AD89F18002353AE /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC52AD89F18002353AE /* Credentials.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,9 @@
 /* Begin PBXFileReference section */
 		EC996EB62AD839AB002353AE /* JamfUtils */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JamfUtils; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC996EB92AD839AB002353AE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		EC996EC02AD84ED5002353AE /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		EC996EC22AD85000002353AE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		EC996EC52AD89F18002353AE /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +63,20 @@
 		EC996EB82AD839AB002353AE /* JamfUtils */ = {
 			isa = PBXGroup;
 			children = (
+				EC996EC42AD85120002353AE /* Models */,
 				EC996EB92AD839AB002353AE /* main.swift */,
 			);
 			path = JamfUtils;
+			sourceTree = "<group>";
+		};
+		EC996EC42AD85120002353AE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC996EC02AD84ED5002353AE /* Auth.swift */,
+				EC996EC52AD89F18002353AE /* Credentials.swift */,
+				EC996EC22AD85000002353AE /* Keychain.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,6 +138,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC996EBA2AD839AB002353AE /* main.swift in Sources */,
+				EC996EC12AD84ED5002353AE /* Auth.swift in Sources */,
+				EC996EC62AD89F18002353AE /* Credentials.swift in Sources */,
+				EC996EC32AD85000002353AE /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
