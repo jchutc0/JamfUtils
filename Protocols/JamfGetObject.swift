@@ -16,6 +16,9 @@ protocol JamfGetObject: Codable, Identifiable {
     static func getUrl(server: String, query: String) throws -> URL
     static func getRequest(url: URL, token: String) -> URLRequest
     static func getData(request: URLRequest) async throws -> Data
+    static func getJSONDecoder() -> JSONDecoder
+    static func parseDecodeError(_ jsonError: Error) -> String
+    static func decodeAllResults(data: Data) throws -> [Self]
 
 //    static func parseJson
     
@@ -28,6 +31,20 @@ enum JSSError: Error {
     case decode(String)
 }
 
+extension JSSError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .getRequestFail:
+            return NSLocalizedString("Unable to get URL for the JSS", comment: "")
+        case .connectionFailure:
+            return NSLocalizedString("Unable to connect to the JSS", comment: "")
+        case .invalidHttpStatus(let code, let string):
+            return NSLocalizedString("Invalid HTTP status code: \(code) for URL: \(string)", comment: "")
+        case .decode(let errString):
+            return NSLocalizedString("Error decoding JSON -- \(errString)", comment: "")
+        }
+    }
+}
 
 extension JamfGetObject {
     
@@ -70,6 +87,29 @@ extension JamfGetObject {
         }
         return data
     } // getData
+    
+    static func getJSONDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        return decoder
+    }
+    
+    static func parseDecodeError(_ jsonError: Error) -> String {
+        switch jsonError {
+        case DecodingError.dataCorrupted(let context):
+            return "\(context.codingPath): data corrupted: \(context.debugDescription)"
+        case DecodingError.keyNotFound(let key, let context):
+            return "\(context.codingPath): key \(key) not found: \(context.debugDescription)"
+        case DecodingError.valueNotFound(let value, let context):
+            return "\(context.codingPath): value \(value) not found: \(context.debugDescription)"
+        case DecodingError.typeMismatch(let type, let context):
+            return "\(context.codingPath): type \(type) mismatch: \(context.debugDescription)"
+        default:
+            return "error \(jsonError)"
+        }
+    }
 
     // ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
     // gets a list of all objects from the server
@@ -83,8 +123,7 @@ extension JamfGetObject {
         let request = getRequest(url: url, token: token)
         
         let data = try await getData(request: request)
-        let result: JamfResults<Self> = try decodeData(data: data)
-        return result.results
+        return try decodeAllResults(data: data)
     } // getAll
     
     // ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
@@ -99,16 +138,17 @@ extension JamfGetObject {
         let request = getRequest(url: url, token: token)
 
         let data = try await getData(request: request)
-        return try decodeData(data: data)
+        do {
+            return try decodeData(data: data)
+        } catch {
+            throw JSSError.decode(parseDecodeError(error))
+        }
     } // getOne
     
     // ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
     // decodes a class from JSON data
     static func decodeData<T: Codable>(data: Data) throws -> T {
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        let decoder = getJSONDecoder()
         do {
             let result = try decoder.decode(T.self, from: data)
             return result
@@ -125,13 +165,15 @@ extension JamfGetObject {
             throw JSSError.decode("error: \(error)")
         }
     } // decodeData
+    
+    static func decodeAllResults(data: Data) throws -> [Self] {
+        do { return (try decodeData(data: data) as JamfResults<Self>).results }
+        catch { throw JSSError.decode(parseDecodeError(error)) }
+    }
+
 } // JamfObject
 
 struct JamfResults<T: JamfGetObject>: Codable {
     var totalCount: Int
     var results: [T]
-}
-
-struct JamfSingleResult: Codable {
-    
-}
+} // JamfResults
