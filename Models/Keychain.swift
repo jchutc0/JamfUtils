@@ -39,7 +39,7 @@ struct Keychain {
     
     // ********** ********** ********** ********** ********** ********** **********
     
-    static func search(credentials: Credentials) throws -> Credentials {
+    static func search(credentials: Credentials) throws -> String {
         let query = try searchQuery(credentials: credentials)
         
         var item: CFTypeRef?
@@ -51,7 +51,7 @@ struct Keychain {
               let password = String(data: passwordData, encoding: .utf8)
         else { throw KeychainError.unexpectedPasswordData }
         
-        return Credentials(username: credentials.username, password: password, server: credentials.server)
+        return password
     } // search function
     
     // ********** ********** ********** ********** ********** ********** **********

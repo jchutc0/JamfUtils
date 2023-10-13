@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC996EBA2AD839AB002353AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EB92AD839AB002353AE /* main.swift */; };
 		EC996EC12AD84ED5002353AE /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC02AD84ED5002353AE /* Auth.swift */; };
 		EC996EC32AD85000002353AE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC22AD85000002353AE /* Keychain.swift */; };
 		EC996EC62AD89F18002353AE /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC52AD89F18002353AE /* Credentials.swift */; };
+		EC996EC82AD990F2002353AE /* JamfBegin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC72AD990F2002353AE /* JamfBegin.swift */; };
+		EC996ECC2AD9955A002353AE /* JamfGetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECB2AD9955A002353AE /* JamfGetObject.swift */; };
+		EC996ECE2AD99B21002353AE /* CategoryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECD2AD99B21002353AE /* CategoryEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,11 +28,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EC996EB62AD839AB002353AE /* JamfUtils */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JamfUtils; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC996EB92AD839AB002353AE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		EC996EB62AD839AB002353AE /* jamf_begin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = jamf_begin; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC996EC02AD84ED5002353AE /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		EC996EC22AD85000002353AE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		EC996EC52AD89F18002353AE /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		EC996EC72AD990F2002353AE /* JamfBegin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JamfBegin.swift; sourceTree = "<group>"; };
+		EC996ECB2AD9955A002353AE /* JamfGetObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JamfGetObject.swift; sourceTree = "<group>"; };
+		EC996ECD2AD99B21002353AE /* CategoryEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +51,10 @@
 		EC996EAD2AD839AB002353AE = {
 			isa = PBXGroup;
 			children = (
-				EC996EB82AD839AB002353AE /* JamfUtils */,
+				EC996ECA2AD994CB002353AE /* Endpoints */,
+				EC996EC42AD85120002353AE /* Models */,
+				EC996EC92AD994BC002353AE /* Protocols */,
+				EC996EB82AD839AB002353AE /* jamf_begin */,
 				EC996EB72AD839AB002353AE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,18 +62,17 @@
 		EC996EB72AD839AB002353AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EC996EB62AD839AB002353AE /* JamfUtils */,
+				EC996EB62AD839AB002353AE /* jamf_begin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EC996EB82AD839AB002353AE /* JamfUtils */ = {
+		EC996EB82AD839AB002353AE /* jamf_begin */ = {
 			isa = PBXGroup;
 			children = (
-				EC996EC42AD85120002353AE /* Models */,
-				EC996EB92AD839AB002353AE /* main.swift */,
+				EC996EC72AD990F2002353AE /* JamfBegin.swift */,
 			);
-			path = JamfUtils;
+			path = jamf_begin;
 			sourceTree = "<group>";
 		};
 		EC996EC42AD85120002353AE /* Models */ = {
@@ -79,12 +85,28 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		EC996EC92AD994BC002353AE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EC996ECB2AD9955A002353AE /* JamfGetObject.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		EC996ECA2AD994CB002353AE /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				EC996ECD2AD99B21002353AE /* CategoryEndpoint.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EC996EB52AD839AB002353AE /* JamfUtils */ = {
+		EC996EB52AD839AB002353AE /* jamf_begin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EC996EBD2AD839AB002353AE /* Build configuration list for PBXNativeTarget "JamfUtils" */;
+			buildConfigurationList = EC996EBD2AD839AB002353AE /* Build configuration list for PBXNativeTarget "jamf_begin" */;
 			buildPhases = (
 				EC996EB22AD839AB002353AE /* Sources */,
 				EC996EB32AD839AB002353AE /* Frameworks */,
@@ -94,9 +116,9 @@
 			);
 			dependencies = (
 			);
-			name = JamfUtils;
+			name = jamf_begin;
 			productName = JamfUtils;
-			productReference = EC996EB62AD839AB002353AE /* JamfUtils */;
+			productReference = EC996EB62AD839AB002353AE /* jamf_begin */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -114,7 +136,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EC996EB12AD839AB002353AE /* Build configuration list for PBXProject "JamfUtils" */;
+			buildConfigurationList = EC996EB12AD839AB002353AE /* Build configuration list for PBXProject "jamf_begin" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -127,7 +149,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EC996EB52AD839AB002353AE /* JamfUtils */,
+				EC996EB52AD839AB002353AE /* jamf_begin */,
 			);
 		};
 /* End PBXProject section */
@@ -137,8 +159,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC996EBA2AD839AB002353AE /* main.swift in Sources */,
+				EC996ECE2AD99B21002353AE /* CategoryEndpoint.swift in Sources */,
+				EC996EC82AD990F2002353AE /* JamfBegin.swift in Sources */,
 				EC996EC12AD84ED5002353AE /* Auth.swift in Sources */,
+				EC996ECC2AD9955A002353AE /* JamfGetObject.swift in Sources */,
 				EC996EC62AD89F18002353AE /* Credentials.swift in Sources */,
 				EC996EC32AD85000002353AE /* Keychain.swift in Sources */,
 			);
@@ -290,7 +314,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EC996EB12AD839AB002353AE /* Build configuration list for PBXProject "JamfUtils" */ = {
+		EC996EB12AD839AB002353AE /* Build configuration list for PBXProject "jamf_begin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC996EBB2AD839AB002353AE /* Debug */,
@@ -299,7 +323,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EC996EBD2AD839AB002353AE /* Build configuration list for PBXNativeTarget "JamfUtils" */ = {
+		EC996EBD2AD839AB002353AE /* Build configuration list for PBXNativeTarget "jamf_begin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC996EBE2AD839AB002353AE /* Debug */,

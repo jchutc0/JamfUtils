@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/jchutc0/Documents/UKScripts/JamfUtils/jamf_begin.xcodeproj">
    </FileRef>
 </Workspace>

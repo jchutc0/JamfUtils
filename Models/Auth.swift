@@ -54,6 +54,7 @@ struct Auth {
     /// getAuth
     ///
     /// Sets an authorization token with credentials
+    @MainActor
     static func getAuth(credentials: Credentials) async throws {
         cred = credentials
         do {
