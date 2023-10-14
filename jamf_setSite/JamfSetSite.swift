@@ -11,43 +11,8 @@ import Foundation
 struct JamfSetSite {
     static func main() async {
         print("JamfSetSite")
-        var credentials: Credentials = {
-            do {
-                let credentials = try Credentials.getFromDefaults()
-                print("Jamf URL: \(credentials.server)")
-                print("Jamf Username: \(credentials.username)")
-                return credentials
-            } catch {
-                print("Could not load credentials from defaults.")
-                print("Enter the URL of the Jamf server:")
-                guard let url = readLine(strippingNewline: true) else {
-                    print("The URL is required")
-                    exit(1)
-                }
-                print("Enter the username for the Jamf server:")
-                guard let username = readLine(strippingNewline: true) else {
-                    print("The URL is required")
-                    exit(1)
-                }
-                let credentials = Credentials(username: username, password: "", server: url)
-                Credentials.writeToDefaults(cred: credentials)
-                return credentials
-            } // do...catch
-        }()
-        do {
-            credentials.password = try Keychain.search(credentials: credentials)
-            print("Password of \(credentials.password.count) characters found!")
-        } catch {
-            print("Could not find the password in the keychain.")
-            print("Enter the password for the username:")
-            guard let password = getpass("") else {
-                print("Password is required")
-                exit(1)
-            }
-            credentials.password = String(cString: password)
-            try? Keychain.add(credentials: credentials)
-        }
-
+        let credentials = Credentials.promptForCredentials()
+        
         print("Attempting to get an auth token from the Jamf server")
         do {
             try await Auth.getAuth(credentials: credentials)
@@ -57,12 +22,43 @@ struct JamfSetSite {
             print("Unable to get token!")
             exit(1)
         } // do...catch
-        
+
         do {
+            // MARK: Computers
             let computerList = try await ComputerListEndpoint.getAll()
+            let count = computerList.count
             print("Found \(computerList.count) computer objects")
-            for _ in computerList {
-//                print("Computer: \(computer.name)")
+            for (index, element) in computerList.enumerated() {
+                let computer = try await ComputerEndpoint.getOne(query: element.id)
+                let id = computer.id
+                let name = computer.general.name
+                let site = computer.general.site.name
+                let extSite = computer.extension_attributes.first(where: {$0.name == "Jamf Site"})?.value ?? ""
+                var action = "(correct)"
+                if site != extSite {
+                    action = "(updated)"
+                    let xml = ComputerEndpoint.getSiteXml(site: site)
+                    try await ComputerEndpoint.updateOne(id: element.id, xml: xml)
+                } // if site needs updating
+                print("\(index)/\(count)\t\(id) - \(name)\t\(site) \(action)")
+            }
+            // MARK: Mobile Devices
+            let mobileList = try await MobileListEndpoint.getAll()
+            let mobileCount = mobileList.count
+            print("Found \(mobileCount) mobile objects")
+            for (index, element) in mobileList.enumerated() {
+                let mobile = try await MobileEndpoint.getOne(query: element.id)
+                let id = mobile.id
+                let name = mobile.general.name
+                let site = mobile.general.site.name
+                let extSite = mobile.extension_attributes.first(where: {$0.name == "Jamf Site"})?.value ?? ""
+                var action = "(correct)"
+                if site != extSite {
+                    action = "(updated)"
+                    let xml = MobileEndpoint.getSiteXml(site: site)
+                    try await MobileEndpoint.updateOne(id: element.id, xml: xml)
+                } // if site needs updating
+                print("\(index)/\(mobileCount)\t\(id) - \(name)\t\(site) \(action)")
             }
         } catch {
             print(error.localizedDescription)

@@ -19,8 +19,7 @@ protocol JamfGetObject: Codable, Identifiable {
     static func getJSONDecoder() -> JSONDecoder
     static func parseDecodeError(_ jsonError: Error) -> String
     static func decodeAllResults(data: Data) throws -> [Self]
-
-//    static func parseJson
+    static func decodeOneResult(data: Data) throws -> Self
     
 } // JamfObject
 
@@ -55,7 +54,7 @@ extension JamfGetObject {
         guard var components = URLComponents(string: server) else {
             throw JSSError.getRequestFail(url: server)
         }
-        components.path = self.getAllEndpoint + query
+        components.path = "\(getAllEndpoint)\(query)"
         guard let url = components.url else {
             throw JSSError.getRequestFail(url: server + components.path)
         }
@@ -134,15 +133,11 @@ extension JamfGetObject {
               let token = Auth.token else {
             throw AuthError.noCredentials
         }
-        let url = try getUrl(server: server, query: query)
+        let url = try getUrl(server: server, query: "/id/\(query)")
         let request = getRequest(url: url, token: token)
 
         let data = try await getData(request: request)
-        do {
-            return try decodeData(data: data)
-        } catch {
-            throw JSSError.decode(parseDecodeError(error))
-        }
+        return try decodeOneResult(data: data)
     } // getOne
     
     // ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
@@ -169,11 +164,16 @@ extension JamfGetObject {
     static func decodeAllResults(data: Data) throws -> [Self] {
         do { return (try decodeData(data: data) as JamfResults<Self>).results }
         catch { throw JSSError.decode(parseDecodeError(error)) }
-    }
+    } // decodeAllResults
+    
+    static func decodeOneResult(data: Data) throws -> Self {
+        do { return try decodeData(data: data) }
+        catch { throw JSSError.decode(parseDecodeError(error)) }
+    } // decodeOneResult
+
 
 } // JamfObject
 
 struct JamfResults<T: JamfGetObject>: Codable {
-    var totalCount: Int
     var results: [T]
 } // JamfResults
