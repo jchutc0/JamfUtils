@@ -61,6 +61,7 @@
 		EC996EEA2ADA0AEB002353AE /* MobileListEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileListEndpoint.swift; sourceTree = "<group>"; };
 		EC996EEC2ADA2D49002353AE /* JamfPutObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JamfPutObject.swift; sourceTree = "<group>"; };
 		EC996EEE2ADA5732002353AE /* MobileEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileEndpoint.swift; sourceTree = "<group>"; };
+		EC996EF02ADA5CED002353AE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 		EC996EAD2AD839AB002353AE = {
 			isa = PBXGroup;
 			children = (
+				EC996EF02ADA5CED002353AE /* README.md */,
 				EC996ECA2AD994CB002353AE /* Endpoints */,
 				EC996EC42AD85120002353AE /* Models */,
 				EC996EC92AD994BC002353AE /* Protocols */,
