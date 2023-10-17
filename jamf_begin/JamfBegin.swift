@@ -11,42 +11,7 @@ import Foundation
 struct JamfBegin {
     static func main() async {
         print("JamfUtils")
-        var credentials: Credentials = {
-            do {
-                let credentials = try Credentials.getFromDefaults()
-                print("Jamf URL: \(credentials.server)")
-                print("Jamf Username: \(credentials.username)")
-                return credentials
-            } catch {
-                print("Could not load credentials from defaults.")
-                print("Enter the URL of the Jamf server:")
-                guard let url = readLine(strippingNewline: true) else {
-                    print("The URL is required")
-                    exit(1)
-                }
-                print("Enter the username for the Jamf server:")
-                guard let username = readLine(strippingNewline: true) else {
-                    print("The URL is required")
-                    exit(1)
-                }
-                let credentials = Credentials(username: username, password: "", server: url)
-                Credentials.writeToDefaults(cred: credentials)
-                return credentials
-            } // do...catch
-        }()
-        do {
-            credentials.password = try Keychain.search(credentials: credentials)
-            print("Password of \(credentials.password.count) characters found!")
-        } catch {
-            print("Could not find the password in the keychain.")
-            print("Enter the password for the username:")
-            guard let password = getpass("") else {
-                print("Password is required")
-                exit(1)
-            }
-            credentials.password = String(cString: password)
-            try? Keychain.add(credentials: credentials)
-        }
+        let credentials = Credentials.promptForCredentials()
 
         print("Attempting to get an auth token from the Jamf server")
         do {
