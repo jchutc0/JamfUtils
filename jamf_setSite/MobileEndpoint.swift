@@ -7,24 +7,10 @@
 
 import Foundation
 
-struct MobileEndpoint: JamfGetObject, JamfPutObject {
-    
-    var id: String { "\(general.id)" }
+struct MobileEndpoint: JamfListObject {
+
     var general: General
     var extension_attributes: [Extension]
-    
-    struct General: Codable {
-        var id: Int
-        var name: String
-        var site: Site
-        
-        struct Site: Codable { var name: String }
-    } // MobileEndpoint.General
-    
-    struct Extension: Codable {
-        var name: String
-        var value: String
-    }
     
     static let getAllEndpoint = String("/JSSResource/mobiledevices")
     
@@ -35,17 +21,18 @@ struct MobileEndpoint: JamfGetObject, JamfPutObject {
         catch { throw JSSError.decode(parseDecodeError(error)) }
     } // decodeOneResult
     
-    static func getSiteXml(site: String) -> Data {
+    func updateSite() async throws {
         let rootElement = XMLElement(name: "mobile_device")
         let extsElement = XMLElement(name: "extension_attributes")
         let extElement = XMLElement(name: "extension_attribute")
         let nameElement = XMLElement(name: "name", stringValue: "Jamf Site")
-        let valueElement = XMLElement(name: "value", stringValue: site)
+        let valueElement = XMLElement(name: "value", stringValue: general.site.name)
         rootElement.addChild(extsElement)
         extsElement.addChild(extElement)
         extElement.addChild(nameElement)
         extElement.addChild(valueElement)
-        return XMLDocument(rootElement: rootElement).xmlData
+        let xml = XMLDocument(rootElement: rootElement).xmlData
+        try await Self.updateOne(id: id, xml: xml)
     }
     
 } // MobileEndpoint

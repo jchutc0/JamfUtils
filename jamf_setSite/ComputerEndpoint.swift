@@ -7,25 +7,11 @@
 
 import Foundation
 
-struct ComputerEndpoint: JamfGetObject, JamfPutObject {
+struct ComputerEndpoint: JamfListObject {
     
-    var id: String { "\(general.id)" }
     var general: General
     var extension_attributes: [Extension]
     
-    struct General: Codable {
-        var id: Int
-        var name: String
-        var site: Site
-        
-        struct Site: Codable { var name: String }
-    } // ComputerEndpoint.General
-    
-    struct Extension: Codable {
-        var name: String
-        var value: String
-    }
-        
     static let getAllEndpoint = String("/JSSResource/computers")
     
     struct Results: Codable { let computer: ComputerEndpoint }
@@ -35,17 +21,18 @@ struct ComputerEndpoint: JamfGetObject, JamfPutObject {
         catch { throw JSSError.decode(parseDecodeError(error)) }
     } // decodeOneResult
     
-    static func getSiteXml(site: String) -> Data {
+    func updateSite() async throws {
         let rootElement = XMLElement(name: "computer")
         let extsElement = XMLElement(name: "extension_attributes")
         let extElement = XMLElement(name: "extension_attribute")
         let nameElement = XMLElement(name: "name", stringValue: "Jamf Site")
-        let valueElement = XMLElement(name: "value", stringValue: site)
+        let valueElement = XMLElement(name: "value", stringValue: general.site.name)
         rootElement.addChild(extsElement)
         extsElement.addChild(extElement)
         extElement.addChild(nameElement)
         extElement.addChild(valueElement)
-        return XMLDocument(rootElement: rootElement).xmlData
+        let xml = XMLDocument(rootElement: rootElement).xmlData
+        try await Self.updateOne(id: id, xml: xml)
     }
     
 } // ComputerEndpoint

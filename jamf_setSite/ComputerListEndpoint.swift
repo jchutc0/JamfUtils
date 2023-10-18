@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct ComputerListEndpoint: JamfGetObject {
+struct ComputerListEndpoint: JamfListEndpoint {
     
     enum CodingKeys: String, CodingKey {
         case name
         case intId = "id"
     } // CodingKeys
 
-    var id: String { "\(intId)" }
     var intId: Int
     var name: String
 
     static let getAllEndpoint = String("/JSSResource/computers")
+    static let description = String("computer objects")
     
     struct Results: Codable { let computers: [ComputerListEndpoint] }
         
@@ -26,5 +26,9 @@ struct ComputerListEndpoint: JamfGetObject {
         do { return (try decodeData(data: data) as Results).computers }
         catch { throw JSSError.decode(parseDecodeError(error)) }
     } // decodeAllResults
+    
+    static func getItem(id: String) async throws -> any JamfListObject {
+        return try await ComputerEndpoint.getOne(query: id)
+    }
 
 } // ComputerListEndpoint
