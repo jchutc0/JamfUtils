@@ -19,9 +19,8 @@ struct Credentials {
     static let urlKey = "jssUrl"
     
     static func getFromDefaults() throws -> Credentials  {
-        guard let dUsername = UserDefaults.standard.string(forKey: userKey)
-        else { throw CredentialError.noDefaults }
-        guard let dUrl = UserDefaults.standard.string(forKey: urlKey)
+        guard let dUsername = UserDefaults.standard.string(forKey: userKey),
+              let dUrl = UserDefaults.standard.string(forKey: urlKey)
         else { throw CredentialError.noDefaults }
         return Credentials(username: dUsername, password: "", server: dUrl)
     } // getFromDefaults
@@ -74,3 +73,31 @@ struct Credentials {
     } // promptForCredentials
     
 } // Credentials
+
+extension Keychain {
+    
+    static func add(credentials c: Credentials) throws {
+        try add(username: c.username, password: c.password, server: c.server)
+    }
+    
+    static func searchQuery(credentials c: Credentials) throws -> NSDictionary {
+        try searchQuery(username: c.username, server: c.server)
+    }
+    
+    static func search(credentials c: Credentials) throws -> String {
+        try search(username: c.username, server: c.server)
+    }
+    
+    static func updateOrAdd(credentials c: Credentials) throws {
+        try updateOrAdd(username: c.username, password: c.password, server: c.server)
+    }
+    
+    static func updateOrAdd(credentials c: Credentials, retryPassword: String) throws {
+        try updateOrAdd(username: c.username, password: c.password, server: c.server, retryPassword: retryPassword)
+    }
+    
+    static func delete(credentials c: Credentials) throws {
+        try delete(username: c.username, server: c.server)
+    }
+    
+} // Keychain

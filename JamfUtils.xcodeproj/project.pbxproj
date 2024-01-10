@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		EC1E684B2ADEE5BE00B74295 /* JamfListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E684A2ADEE5BE00B74295 /* JamfListObject.swift */; };
 		EC1E684D2ADF88B300B74295 /* JamfListEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E684C2ADF88B300B74295 /* JamfListEndpoint.swift */; };
-		EC996EC12AD84ED5002353AE /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC02AD84ED5002353AE /* Auth.swift */; };
-		EC996EC32AD85000002353AE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC22AD85000002353AE /* Keychain.swift */; };
-		EC996EC62AD89F18002353AE /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC52AD89F18002353AE /* Credentials.swift */; };
+		EC3245F72B4DA12A00135B00 /* OAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3245F52B4DA12A00135B00 /* OAuth.swift */; };
+		EC790DA62B4E1E2F00922476 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC22AD85000002353AE /* Keychain.swift */; };
+		EC790DAC2B4E2C6300922476 /* OAuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC790DAB2B4E2C6300922476 /* OAuthCredentials.swift */; };
 		EC996EC82AD990F2002353AE /* JamfBegin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC72AD990F2002353AE /* JamfBegin.swift */; };
 		EC996ECC2AD9955A002353AE /* JamfGetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECB2AD9955A002353AE /* JamfGetObject.swift */; };
 		EC996ECE2AD99B21002353AE /* CategoryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECD2AD99B21002353AE /* CategoryEndpoint.swift */; };
@@ -51,6 +51,8 @@
 /* Begin PBXFileReference section */
 		EC1E684A2ADEE5BE00B74295 /* JamfListObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JamfListObject.swift; sourceTree = "<group>"; };
 		EC1E684C2ADF88B300B74295 /* JamfListEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JamfListEndpoint.swift; sourceTree = "<group>"; };
+		EC3245F52B4DA12A00135B00 /* OAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth.swift; sourceTree = "<group>"; };
+		EC790DAB2B4E2C6300922476 /* OAuthCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthCredentials.swift; sourceTree = "<group>"; };
 		EC996EB62AD839AB002353AE /* jamf_begin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = jamf_begin; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC996EC02AD84ED5002353AE /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		EC996EC22AD85000002353AE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -86,6 +88,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC790DA92B4E2C0800922476 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				EC996EC02AD84ED5002353AE /* Auth.swift */,
+				EC996EC52AD89F18002353AE /* Credentials.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		EC790DAA2B4E2C2900922476 /* OAuth */ = {
+			isa = PBXGroup;
+			children = (
+				EC3245F52B4DA12A00135B00 /* OAuth.swift */,
+				EC790DAB2B4E2C6300922476 /* OAuthCredentials.swift */,
+			);
+			path = OAuth;
+			sourceTree = "<group>";
+		};
 		EC996EAD2AD839AB002353AE = {
 			isa = PBXGroup;
 			children = (
@@ -119,8 +139,8 @@
 		EC996EC42AD85120002353AE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EC996EC02AD84ED5002353AE /* Auth.swift */,
-				EC996EC52AD89F18002353AE /* Credentials.swift */,
+				EC790DA92B4E2C0800922476 /* Auth */,
+				EC790DAA2B4E2C2900922476 /* OAuth */,
 				EC996EC22AD85000002353AE /* Keychain.swift */,
 			);
 			path = Models;
@@ -236,12 +256,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC790DAC2B4E2C6300922476 /* OAuthCredentials.swift in Sources */,
 				EC996ECE2AD99B21002353AE /* CategoryEndpoint.swift in Sources */,
 				EC996EC82AD990F2002353AE /* JamfBegin.swift in Sources */,
-				EC996EC12AD84ED5002353AE /* Auth.swift in Sources */,
 				EC996ECC2AD9955A002353AE /* JamfGetObject.swift in Sources */,
-				EC996EC62AD89F18002353AE /* Credentials.swift in Sources */,
-				EC996EC32AD85000002353AE /* Keychain.swift in Sources */,
+				EC3245F72B4DA12A00135B00 /* OAuth.swift in Sources */,
+				EC790DA62B4E1E2F00922476 /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,19 +17,22 @@ enum KeychainError: Error {
 }
 
 struct Keychain {
+    
 
-    static func add(credentials: Credentials) throws {
-        guard credentials.username != "",
-              credentials.password != "",
-              credentials.server != ""
+    // ********** ********** ********** ********** ********** ********** **********
+    
+    static func add(username: String, password: String, server: String) throws {
+        guard username != "",
+              password != "",
+              server != ""
         else { throw KeychainError.missingCredential }
         
         let query: NSDictionary = [
             kSecClass: kSecClassInternetPassword,
-            kSecAttrServer: credentials.server,
-            kSecAttrLabel: credentials.server,
-            kSecAttrAccount: credentials.username,
-            kSecValueData: Data(credentials.password.utf8)
+            kSecAttrServer: server,
+            kSecAttrLabel: server,
+            kSecAttrAccount: username,
+            kSecValueData: Data(password.utf8)
         ] // query
 
         let status = SecItemAdd(query, nil)
@@ -39,8 +42,8 @@ struct Keychain {
     
     // ********** ********** ********** ********** ********** ********** **********
     
-    static func search(credentials: Credentials) throws -> String {
-        let query = try searchQuery(credentials: credentials)
+    static func search(username: String, server: String) throws -> String {
+        let query = try searchQuery(username: username, server: server)
         
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query, &item)
@@ -56,31 +59,35 @@ struct Keychain {
     
     // ********** ********** ********** ********** ********** ********** **********
     
-    static func updateOrAdd(credentials: Credentials) throws {
-        guard credentials.password != "" else { throw KeychainError.missingCredential }
-        let query = try searchQuery(credentials: credentials)
+    static func updateOrAdd(username: String, password: String, server: String) throws {
+        guard password != "" else { throw KeychainError.missingCredential }
+        let query = try searchQuery(username: username, server: server)
         
         let attributes = [
-            kSecAttrAccount as String: credentials.username,
-            kSecValueData as String: credentials.password.data(using: String.Encoding.utf8)!
+            kSecAttrAccount as String: username,
+            kSecValueData as String: password.data(using: String.Encoding.utf8)!
         ] as [String : Any] as CFDictionary
         
         let status = SecItemUpdate(query, attributes)
-        guard status != errSecItemNotFound else { return try add(credentials: credentials) }
+        guard status != errSecItemNotFound else {
+            return try add(username: username, password: password, server: server)
+        }
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
     } // updateOrAdd
     
     // ********** ********** ********** ********** ********** ********** **********
     
-    static func updateOrAdd(credentials: Credentials, retryPassword: String) throws {
-        guard retryPassword == credentials.password else { throw KeychainError.passwordMatch }
-        try updateOrAdd(credentials: credentials)
+    static func updateOrAdd(
+        username: String, password: String, server: String, retryPassword: String
+    ) throws {
+        guard retryPassword == password else { throw KeychainError.passwordMatch }
+        try updateOrAdd(username: username, password: password, server: server)
     } // updateOrAdd
     
     // ********** ********** ********** ********** ********** ********** **********
     
-    static func delete(credentials: Credentials) throws {
-        let query = try searchQuery(credentials: credentials)
+    static func delete(username: String, server: String) throws {
+        let query = try searchQuery(username: username, server: server)
         
         let status = SecItemDelete(query)
         guard status == errSecSuccess || status != errSecItemNotFound else {
@@ -96,15 +103,14 @@ struct Keychain {
     
     // ********** ********** ********** ********** ********** ********** **********
     
-    static func searchQuery(credentials: Credentials) throws -> NSDictionary {
-        guard credentials.username != "",
-              credentials.server != ""
+    static func searchQuery(username: String, server: String) throws -> NSDictionary {
+        guard username != "", server != ""
         else { throw KeychainError.missingCredential }
         
         return [
             kSecClass: kSecClassInternetPassword,
-            kSecAttrServer: credentials.server,
-            kSecAttrAccount: credentials.username,
+            kSecAttrServer: server,
+            kSecAttrAccount: username,
             kSecMatchLimit: kSecMatchLimitOne,
             kSecReturnData: true
         ]
