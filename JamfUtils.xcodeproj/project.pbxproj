@@ -12,13 +12,13 @@
 		EC3245F72B4DA12A00135B00 /* OAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3245F52B4DA12A00135B00 /* OAuth.swift */; };
 		EC790DA62B4E1E2F00922476 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC22AD85000002353AE /* Keychain.swift */; };
 		EC790DAC2B4E2C6300922476 /* OAuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC790DAB2B4E2C6300922476 /* OAuthCredentials.swift */; };
+		EC950C712B58396F00E11065 /* OAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3245F52B4DA12A00135B00 /* OAuth.swift */; };
+		EC950C722B58397300E11065 /* OAuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC790DAB2B4E2C6300922476 /* OAuthCredentials.swift */; };
 		EC996EC82AD990F2002353AE /* JamfBegin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC72AD990F2002353AE /* JamfBegin.swift */; };
 		EC996ECC2AD9955A002353AE /* JamfGetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECB2AD9955A002353AE /* JamfGetObject.swift */; };
 		EC996ECE2AD99B21002353AE /* CategoryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECD2AD99B21002353AE /* CategoryEndpoint.swift */; };
 		EC996EDD2AD9CFD9002353AE /* JamfSetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EDC2AD9CFD9002353AE /* JamfSetSite.swift */; };
-		EC996EDE2AD9D03A002353AE /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC52AD89F18002353AE /* Credentials.swift */; };
 		EC996EDF2AD9D04E002353AE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC22AD85000002353AE /* Keychain.swift */; };
-		EC996EE02AD9D056002353AE /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EC02AD84ED5002353AE /* Auth.swift */; };
 		EC996EE22AD9D1B2002353AE /* ComputerListEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EE12AD9D1B2002353AE /* ComputerListEndpoint.swift */; };
 		EC996EE42AD9D1C2002353AE /* ComputerEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996EE32AD9D1C2002353AE /* ComputerEndpoint.swift */; };
 		EC996EE82AD9E47B002353AE /* JamfGetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC996ECB2AD9955A002353AE /* JamfGetObject.swift */; };
@@ -271,16 +271,16 @@
 			files = (
 				EC1E684B2ADEE5BE00B74295 /* JamfListObject.swift in Sources */,
 				EC996EEB2ADA0AEB002353AE /* MobileListEndpoint.swift in Sources */,
-				EC996EDE2AD9D03A002353AE /* Credentials.swift in Sources */,
 				EC996EE42AD9D1C2002353AE /* ComputerEndpoint.swift in Sources */,
 				EC1E684D2ADF88B300B74295 /* JamfListEndpoint.swift in Sources */,
+				EC950C722B58397300E11065 /* OAuthCredentials.swift in Sources */,
 				EC996EDD2AD9CFD9002353AE /* JamfSetSite.swift in Sources */,
 				EC996EE22AD9D1B2002353AE /* ComputerListEndpoint.swift in Sources */,
+				EC950C712B58396F00E11065 /* OAuth.swift in Sources */,
 				EC996EED2ADA2D49002353AE /* JamfPutObject.swift in Sources */,
 				EC996EDF2AD9D04E002353AE /* Keychain.swift in Sources */,
 				EC996EE82AD9E47B002353AE /* JamfGetObject.swift in Sources */,
 				EC996EEF2ADA5732002353AE /* MobileEndpoint.swift in Sources */,
-				EC996EE02AD9D056002353AE /* Auth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

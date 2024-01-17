@@ -11,7 +11,7 @@ import Foundation
 struct JamfSetSite {
     static func main() async {
         print("JamfSetSite")
-        let credentials = Credentials.promptForCredentials()
+        let credentials = OAuthCredentials.promptForCredentials()
         
         print("Attempting to get an auth token from the Jamf server")
         do {

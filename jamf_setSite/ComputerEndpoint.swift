@@ -25,7 +25,7 @@ struct ComputerEndpoint: JamfListObject {
         let rootElement = XMLElement(name: "computer")
         let extsElement = XMLElement(name: "extension_attributes")
         let extElement = XMLElement(name: "extension_attribute")
-        let nameElement = XMLElement(name: "name", stringValue: "Jamf Site")
+        let nameElement = XMLElement(name: "id", stringValue: "33")
         let valueElement = XMLElement(name: "value", stringValue: general.site.name)
         rootElement.addChild(extsElement)
         extsElement.addChild(extElement)
